@@ -44,9 +44,10 @@ hypridle  hyprlock  hyprpaper  cava  grimblast-git
 ```bash
 git clone https://github.com/2479964/MiaowArch.git
 cd MiaowArch
-./install.sh          # deploy configs + install packages
-# or
-./install.sh --no-pkg # deploy configs only
+./install.sh            # guided install (packages + configs)
+./install.sh --no-pkg   # deploy configs only
+./install.sh --pkg-only # install packages only
+./install.sh -y         # non-interactive mode
 ```
 
 The install script symlinks every config file into `~/.config/` and makes
