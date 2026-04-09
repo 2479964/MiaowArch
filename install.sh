@@ -5,7 +5,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 INSTALL_PKGS=true
-CONFIG_ONLY=false
+PKG_ONLY=false
 ASSUME_YES=false
 
 PACMAN_PACKAGES=(
@@ -149,9 +149,10 @@ deploy_configs() {
 deploy_catos_scripts() {
     step "Deploying catOS scripts"
 
+    local dst
     mkdir -p "$CONFIG_DIR/catOS"
     for script in "$DOTFILES_DIR/catOS/"*.sh; do
-        local dst="$CONFIG_DIR/catOS/$(basename "$script")"
+        dst="$CONFIG_DIR/catOS/$(basename "$script")"
         link_file "$script" "$dst"
         chmod +x "$dst"
         ok "Executable $dst"
@@ -189,7 +190,7 @@ parse_args() {
     for arg in "$@"; do
         case "$arg" in
             --no-pkg) INSTALL_PKGS=false ;;
-            --pkg-only) CONFIG_ONLY=true ;;
+            --pkg-only) PKG_ONLY=true ;;
             -y|--yes) ASSUME_YES=true ;;
             -h|--help)
                 usage
@@ -203,7 +204,7 @@ parse_args() {
         esac
     done
 
-    if $CONFIG_ONLY && ! $INSTALL_PKGS; then
+    if ! $INSTALL_PKGS && $PKG_ONLY; then
         err "Cannot use --no-pkg and --pkg-only together."
         exit 1
     fi
@@ -220,7 +221,7 @@ main() {
         info "Skipping package installation (--no-pkg)"
     fi
 
-    if ! $CONFIG_ONLY; then
+    if ! $PKG_ONLY; then
         deploy_configs
         deploy_catos_scripts
         prepare_wallpapers_dir
