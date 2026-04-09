@@ -27,8 +27,8 @@ warn_count=0
 
 print_banner() {
     printf '\n'
-    printf '%b\n' "${BOLD}🐈 MiaowArch Installer${RESET}"
-    printf '%b\n' "Deploy Hyprland + catOS config on Arch Linux."
+    printf '%b\n' "${BOLD}🐈 MiaowArch (CAT OS) Installer${RESET}"
+    printf '%b\n' "Deploy Hyprland + CAT OS config on Arch Linux."
     printf '\n'
 }
 
@@ -58,7 +58,7 @@ ask_yes_no() {
         return 0
     fi
     read -r -p "$prompt [Y/n] " answer
-    [[ -z "$answer" || "$answer" =~ ^[Yy]$ ]]
+    [[ -z "$answer" || "$answer" =~ ^[Yy]([Ee][Ss])?$ ]]
 }
 
 backup_path() {
@@ -163,7 +163,7 @@ prepare_wallpapers_dir() {
     step "Preparing wallpapers directory"
 
     mkdir -p "$CONFIG_DIR/wallpapers"
-    if [[ -z "$(find "$CONFIG_DIR/wallpapers" -maxdepth 1 -type f | head -n1)" ]]; then
+    if [[ -z "$(find "$CONFIG_DIR/wallpapers" -maxdepth 1 -type f -print -quit)" ]]; then
         info "Add wallpaper images to: $CONFIG_DIR/wallpapers"
     fi
 }
@@ -229,7 +229,7 @@ main() {
         info "Skipping config deployment (--pkg-only)"
     fi
 
-    printf '\n%b\n' "${GREEN}${BOLD}Done! MiaowArch setup finished.${RESET}"
+    printf '\n%b\n' "${GREEN}${BOLD}Done! MiaowArch (CAT OS) setup finished.${RESET}"
     printf '%b\n' "  • Log out and select Hyprland, or run: Hyprland"
     if (( warn_count > 0 )); then
         printf '%b\n' "  • Completed with ${warn_count} warning(s). Review messages above."
