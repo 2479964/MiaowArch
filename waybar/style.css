@@ -1,0 +1,111 @@
+/* ═══════════════════════════════════════════
+   CAT OS — Waybar Style
+   dark · cozy · rounded · semi-transparent
+   ═══════════════════════════════════════════ */
+
+/* ── Palette ──────────────────────────────── */
+@define-color bg       rgba(15, 15, 15, 0.82);
+@define-color surface  rgba(26, 26, 26, 0.90);
+@define-color accent   #ffb347;
+@define-color text     #e6e6e6;
+@define-color muted    #888888;
+@define-color border   rgba(255, 179, 71, 0.25);
+
+/* ── Bar itself ───────────────────────────── */
+window#waybar {
+    background: @bg;
+    border-radius: 12px;
+    border: 1px solid @border;
+    color: @text;
+    font-family: 'JetBrains Mono', 'Noto Color Emoji';
+    font-size: 13px;
+    transition: none;
+}
+
+/* ── Generic module ──────────────────────── */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+    padding: 0 4px;
+}
+
+#workspaces,
+#clock,
+#cpu,
+#memory,
+#pulseaudio,
+#battery,
+#tray {
+    background: @surface;
+    color: @text;
+    border-radius: 8px;
+    padding: 4px 10px;
+    margin: 4px 3px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease,
+                background   0.2s ease;
+}
+
+#workspaces button,
+#workspaces button:hover,
+#workspaces button:focus {
+    background: transparent;
+    color: @muted;
+    border-radius: 6px;
+    padding: 2px 6px;
+    border: none;
+    box-shadow: none;
+    transition: color 0.2s ease;
+}
+
+#workspaces button.active {
+    color: @accent;
+    background: rgba(255, 179, 71, 0.12);
+}
+
+#workspaces button:hover {
+    color: @text;
+}
+
+/* ── Clock — centrepiece ─────────────────── */
+#clock {
+    color: @accent;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+/* ── CPU / RAM hover accent ──────────────── */
+#cpu:hover,
+#memory:hover {
+    border-color: @accent;
+    color: @accent;
+}
+
+/* ── Battery states ─────────────────────── */
+#battery.warning {
+    color: #f0c040;
+}
+
+#battery.critical {
+    color: #ff6060;
+    animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+    to { opacity: 0; }
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #80d080;
+}
+
+/* ── Audio ──────────────────────────────── */
+#pulseaudio.muted {
+    color: @muted;
+}
+
+/* ── Tray ───────────────────────────────── */
+#tray > .passive   { -gtk-icon-effect: dim; }
+#tray > .needs-attention { color: @accent; }
