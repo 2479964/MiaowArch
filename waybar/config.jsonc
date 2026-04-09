@@ -1,0 +1,98 @@
+{
+    // ── CAT OS Waybar — chill HUD ──────────────────
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 4,
+    "margin-top": 8,
+    "margin-left": 16,
+    "margin-right": 16,
+    "exclusive": true,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "memory",
+        "cpu",
+        "battery",
+        "tray"
+    ],
+
+    // ── Workspaces ─────────────────────────────────
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": "󰲠",
+            "2": "󰲢",
+            "3": "󰲤",
+            "4": "󰲦",
+            "5": "󰲨",
+            "active": "󰮯",
+            "default": "󰊠"
+        },
+        "sort-by-number": true
+    },
+
+    // ── Clock ──────────────────────────────────────
+    "clock": {
+        "format": "󰥔  {:%H:%M}",
+        "format-alt": "󰃭  {:%a %d %b}",
+        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "on-click": "toggle-format"
+    },
+
+    // ── CPU ────────────────────────────────────────
+    "cpu": {
+        "format": "󰍛  {usage}%",
+        "tooltip": true,
+        "interval": 3,
+        "on-click": "kitty --title btop -- btop"
+    },
+
+    // ── Memory ─────────────────────────────────────
+    "memory": {
+        "format": "󰾆  {percentage}%",
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
+        "interval": 5,
+        "on-click": "kitty --title btop -- btop"
+    },
+
+    // ── Audio ──────────────────────────────────────
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰖁  muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "tooltip-format": "{desc} — {volume}%"
+    },
+
+    // ── Battery ────────────────────────────────────
+    "battery": {
+        "states": {
+            "good":    95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged":  "󰚥  {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip-format": "{timeTo}"
+    },
+
+    // ── Tray ───────────────────────────────────────
+    "tray": {
+        "spacing": 8,
+        "icon-size": 14
+    }
+}
